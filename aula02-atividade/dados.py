@@ -92,8 +92,9 @@ def preparar_livros(linhas):
 
 def buscar_por_titulo(livros, busca):
     resultado = []
+    busca = busca.lower().strip()
     for livro in livros:
-        if busca.lower() in livro["titulo"].lower():
+        if busca in livro["titulo"].lower():
             resultado.append(livro)
     return resultado
 
