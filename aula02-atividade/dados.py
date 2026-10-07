@@ -89,12 +89,33 @@ def preparar_livros(linhas):
 
     return livros
 
+
+def buscar_por_titulo(livros, busca):
+    resultado = []
+    for livro in livros:
+        if busca.lower() in livro["titulo"].lower():
+            resultado.append(livro)
+    return resultado
+
+def quantidade_encontrada(livros, busca):
+    if len(buscar_por_titulo(livros, busca)) == 0:
+        return "Nenhum livro encontrado"
+    
+    return len(buscar_por_titulo(livros, busca))
+
+
+
 def carregar_livros():
     """Lê o CSV e já devolve os livros prontos para usar."""
     return preparar_livros(ler_livros())
 
 
 if __name__ == "__main__":
-    livros = ler_livros()
-    print(f"{len(livros)} livros carregados")
-    print("Primeiro livro:", livros[0])
+
+    livros = carregar_livros()
+    resultado = buscar_por_titulo(livros, "hary")
+    for livro in resultado:
+        print(f"{livro['titulo']}")
+
+    quantidade = quantidade_encontrada(livros, "harddddr")
+    print(f"Quantidade encontrada: {quantidade}")
