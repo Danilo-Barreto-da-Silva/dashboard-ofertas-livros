@@ -64,21 +64,26 @@ def main():
     col4.metric("Livro mais caro", f"£{mais_caro["preco"]}")
     col4.caption(mais_caro["titulo"])
 
-    pesquisa = st.text_input("Pesquisar por título:")
-    if pesquisa == "":
-        st.dataframe(tabela)
-    elif pesquisa:
-            livros_filtrados = dados.buscar_por_titulo(livros, pesquisa)
-            tabela = montar_tabela(livros_filtrados)
-            if len(tabela) == 0:
-            
-                st.warning("Nenhum livro encontrado.")
-                
-            else:
-                
-                st.write(f"Quantidade de livros encontrados: {len(tabela)}")
-                st.dataframe(tabela)
+    col_pesquisa, col_categoria = st.columns(2)
+
+    pesquisa = col_pesquisa.text_input("Pesquisar por título:")
+    categoria_selecionada = col_categoria.selectbox("Filtrar por categoria:",["Todas"] + dados.listar_categorias(livros))
+   
+    lista_categorias = dados.filtrar_por_categoria(livros, categoria_selecionada)
+    encontrados = dados.buscar_por_titulo(lista_categorias, pesquisa)
+
     
+
+    tabela = montar_tabela(encontrados)
+    if len(tabela) == 0:
+    
+        st.warning("Nenhum livro encontrado.")
+        
+    else:
+        
+        st.write(f"Quantidade de livros encontrados: {len(tabela)}")
+        st.dataframe(tabela)
+
 
     
 

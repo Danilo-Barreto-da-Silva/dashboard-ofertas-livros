@@ -110,6 +110,24 @@ def carregar_livros():
     """Lê o CSV e já devolve os livros prontos para usar."""
     return preparar_livros(ler_livros())
 
+def listar_categorias(livros):
+    """Devolve uma lista com todas as categorias de livros, sem repetições."""
+    categorias = []
+    for livro in livros:
+        if livro["categoria"] not in categorias:
+            categorias.append(livro["categoria"])
+    return categorias
+
+def filtrar_por_categoria(livros, categoria):
+    """Devolve apenas os livros da categoria escolhida."""
+    if categoria == "Todas":
+        return livros
+    resultado = []
+    for livro in livros:
+        if livro["categoria"] == categoria:
+            resultado.append(livro)
+    return resultado
+
 
 if __name__ == "__main__":
 
